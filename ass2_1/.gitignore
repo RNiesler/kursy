@@ -1,0 +1,8 @@
+wordnet-testing.zip
+.gradle
+.idea
+build
+out
+wordnet
+.DS_Store
+ass2_1.iml
