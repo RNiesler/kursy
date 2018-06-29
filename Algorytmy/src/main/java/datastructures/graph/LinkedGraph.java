@@ -31,7 +31,6 @@ public class LinkedGraph<T> implements Graph<T> {
         this.nodes = new LinkedList<>();
     }
 
-    @SuppressWarnings("unchecked")
     public LinkedGraph(Set<? extends T> set) {
         this.nodes = set.stream()
                 .map(value -> new Node<T>(value))

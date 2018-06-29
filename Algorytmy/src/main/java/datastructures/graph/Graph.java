@@ -23,7 +23,7 @@ public interface Graph<T> {
 
     int size();
 
-    Collection<? extends Node<? extends T>> getNodes();
+    Collection<? extends Node<T>> getNodes();
 
     default Iterator<? extends T> iterator(GraphTraverseStrategy<T> strategy) {
         return strategy.iterator(getNodes());

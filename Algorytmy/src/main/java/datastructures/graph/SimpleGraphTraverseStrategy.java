@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class SimpleGraphTraverseStrategy<T> implements GraphTraverseStrategy<T> {
     @Override
-    public Iterator<? extends T> iterator(Collection<? extends Graph.Node<? extends T>> nodes) {
+    public Iterator<T> iterator(Collection<? extends Graph.Node<T>> nodes) {
         return nodes.stream()
                 .map(Graph.Node::getValue)
                 .collect(Collectors.toList())
