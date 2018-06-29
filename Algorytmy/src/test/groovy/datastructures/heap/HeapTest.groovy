@@ -1,8 +1,7 @@
-package heap
+package datastructures.heap
 
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.Test
-import org.junit.rules.ExpectedException
 
 class HeapTest {
 

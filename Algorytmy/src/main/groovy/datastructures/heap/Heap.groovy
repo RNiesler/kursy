@@ -1,4 +1,4 @@
-package heap
+package datastructures.heap
 
 class Heap<T extends Comparable<T>> {
     protected List<T> heapStorage
@@ -21,7 +21,7 @@ class Heap<T extends Comparable<T>> {
 
     T extract() {
         if (heapStorage.size() == 0) {
-            throw new NoSuchElementException("The heap is empty")
+            throw new NoSuchElementException("The datastructures.heap is empty")
         }
         T ret = heapStorage[0]
         heapStorage[0] = heapStorage[lastIndex()]

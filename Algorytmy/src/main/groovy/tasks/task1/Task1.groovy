@@ -1,4 +1,4 @@
-package task1
+package tasks.task1
 
 class Node<T> {
     Node(T value) {

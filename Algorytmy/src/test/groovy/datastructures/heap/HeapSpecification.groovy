@@ -1,4 +1,4 @@
-package heap
+package datastructures.heap
 
 import spock.lang.Specification
 
