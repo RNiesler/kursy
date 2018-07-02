@@ -24,7 +24,7 @@ class SimpleGraphTraverseStrategySpecification extends Specification {
         list.each { testStrs.contains(it) }
     }
 
-    def 'test on not connected'() {
+    def 'test on not connected - linked'() {
         setup:
         final graph = new LinkedGraph<String>()
         final testStr1 = 'test1'
@@ -43,8 +43,57 @@ class SimpleGraphTraverseStrategySpecification extends Specification {
         list.each { testStrs.contains(it) }
     }
 
-    def 'test on empty'() {
+    def 'test on empty - linked'() {
         final graph = new LinkedGraph<String>()
+        final strategy = new SimpleGraphTraverseStrategy<String>()
+        when:
+        final iterator = graph.iterator(strategy)
+        then:
+        0 == iterator.size()
+    }
+
+    def 'test on adjacency graph'() {
+        setup:
+        final graph = new AdjacencyMatrixGraph<String>(3)
+        final testStr1 = 'test1'
+        final testStr2 = 'test2'
+        final testStr3 = 'test3'
+        final testStrs = [testStr1, testStr2, testStr3]
+        graph.insert(testStr1)
+        graph.insert(testStr2)
+        graph.insert(testStr3)
+        graph.addEdge(testStr1, testStr3)
+        graph.addEdge(testStr3, testStr2)
+        final strategy = new SimpleGraphTraverseStrategy<String>()
+        when:
+        final iterator = graph.iterator(strategy)
+        final list = iterator.toList()
+        then:
+        testStrs.size() == list.size()
+        list.each { testStrs.contains(it) }
+    }
+
+    def 'test on not connected - adjacency'() {
+        setup:
+        final graph = new AdjacencyMatrixGraph<String>()
+        final testStr1 = 'test1'
+        final testStr2 = 'test2'
+        final testStr3 = 'test3'
+        final testStrs = [testStr1, testStr2, testStr3]
+        graph.insert(testStr1)
+        graph.insert(testStr2)
+        graph.insert(testStr3)
+        final strategy = new SimpleGraphTraverseStrategy<String>()
+        when:
+        final iterator = graph.iterator(strategy)
+        final list = iterator.toList()
+        then:
+        testStrs.size() == list.size()
+        list.each { testStrs.contains(it) }
+    }
+
+    def 'test on empty - adjacency'() {
+        final graph = new AdjacencyMatrixGraph<String>()
         final strategy = new SimpleGraphTraverseStrategy<String>()
         when:
         final iterator = graph.iterator(strategy)

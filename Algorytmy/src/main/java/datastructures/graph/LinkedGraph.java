@@ -7,9 +7,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class LinkedGraph<T> implements Graph<T> {
-    public class Node<T> implements Graph.Node<T> {
+    public class Node implements Graph.Node<T> {
         private T value;
-        private List<Node<T>> adjacentList;
+        private List<Node> adjacentList;
 
         Node(T value) {
             this.value = value;
@@ -17,7 +17,7 @@ public class LinkedGraph<T> implements Graph<T> {
         }
 
         @Override
-        public List<Node<T>> getAdjacent() {
+        public List<Node> getAdjacent() {
             return adjacentList;
         }
 
@@ -33,11 +33,11 @@ public class LinkedGraph<T> implements Graph<T> {
 
     public LinkedGraph(Set<? extends T> set) {
         this.nodes = set.stream()
-                .map(value -> new Node<T>(value))
+                .map(value -> new Node(value))
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
-    private LinkedList<Node<T>> nodes;
+    private LinkedList<Node> nodes;
 
     @Override
     public void insert(T value) {
@@ -48,9 +48,9 @@ public class LinkedGraph<T> implements Graph<T> {
 
     @Override
     public void addEdge(T v1, T v2) {
-        Node<T> n1 = getNode(v1).orElseThrow(() ->
+        Node n1 = getNode(v1).orElseThrow(() ->
                 new IllegalArgumentException("Cannot add edge for a value that is not in the graph: " + v1));
-        Node<T> n2 = getNode(v2).orElseThrow(() ->
+        Node n2 = getNode(v2).orElseThrow(() ->
                 new IllegalArgumentException("Cannot add edge for a value that is not in the graph: " + v1));
 
         if (n1.getAdjacent().contains(n2)) {
@@ -60,7 +60,7 @@ public class LinkedGraph<T> implements Graph<T> {
         }
     }
 
-    protected Optional<Node<T>> getNode(T value) {
+    protected Optional<Node> getNode(T value) {
         return nodes.stream().filter(node -> value.equals(node.getValue())).findFirst();
     }
 
@@ -89,7 +89,7 @@ public class LinkedGraph<T> implements Graph<T> {
     }
 
     @Override
-    public List<Node<T>> getNodes() {
+    public List<Node> getNodes() {
         return nodes;
     }
 }
