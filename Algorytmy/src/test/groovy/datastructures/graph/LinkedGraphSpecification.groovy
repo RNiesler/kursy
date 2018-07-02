@@ -114,7 +114,7 @@ class LinkedGraphSpecification extends Specification {
         when:
         graph.addEdge(testStr1, testStr2)
         then:
-        testStr2 in graph.getNodes().find({ it.value == testStr1 }).adjacent.value
+        testStr2 in graph.getNodes().find({ it.value == testStr1 }).adjacent.target.value
     }
 
     def 'test remove with edges'() {

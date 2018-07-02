@@ -43,13 +43,18 @@ public class BreadthFirstSearch<T> implements GraphTraverseStrategy<T> {
         }
 
         @Override
-        public Iterable<? extends Graph.Node<T>> getAdjacent() {
+        public List<Graph.Edge<T>> getAdjacent() {
             return node.getAdjacent();
         }
 
         @Override
         public T getValue() {
             return node.getValue();
+        }
+
+        @Override
+        public boolean hasEdgeTo(Graph.Node<T> target) {
+            return node.hasEdgeTo(target);
         }
 
         public int getDistance() {
@@ -112,8 +117,9 @@ public class BreadthFirstSearch<T> implements GraphTraverseStrategy<T> {
         }
 
         private void addAdjacentToMap(final BfsEnhancedNode<T> previousNode) {
-            previousNode.getAdjacent()
-                    .forEach((Graph.Node<T> adjNode) ->
+            previousNode.getAdjacent().stream()
+                    .map(edge -> edge.getTarget())
+                    .forEach(adjNode ->
                             nodeMap.computeIfAbsent(adjNode.getValue(),
                                     key -> {
                                         BfsEnhancedNode<T> newEnhancedNode = new BfsEnhancedNode(adjNode, previousNode.getDistance() + 1);

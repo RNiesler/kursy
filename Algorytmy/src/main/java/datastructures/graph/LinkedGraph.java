@@ -1,15 +1,12 @@
 package datastructures.graph;
 
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class LinkedGraph<T> implements Graph<T> {
     public class Node implements Graph.Node<T> {
         private T value;
-        private List<Node> adjacentList;
+        private List<Edge<T>> adjacentList;
 
         Node(T value) {
             this.value = value;
@@ -17,13 +14,18 @@ public class LinkedGraph<T> implements Graph<T> {
         }
 
         @Override
-        public List<Node> getAdjacent() {
+        public List<Edge<T>> getAdjacent() {
             return adjacentList;
         }
 
         @Override
         public T getValue() {
             return value;
+        }
+
+        @Override
+        public boolean hasEdgeTo(Graph.Node<T> target) {
+            return adjacentList.stream().anyMatch(edge -> edge.getTarget().equals(target));
         }
     }
 
@@ -47,17 +49,23 @@ public class LinkedGraph<T> implements Graph<T> {
     }
 
     @Override
-    public void addEdge(T v1, T v2) {
+    public void addEdge(T v1, T v2, int weight) {
         Node n1 = getNode(v1).orElseThrow(() ->
                 new IllegalArgumentException("Cannot add edge for a value that is not in the graph: " + v1));
         Node n2 = getNode(v2).orElseThrow(() ->
                 new IllegalArgumentException("Cannot add edge for a value that is not in the graph: " + v1));
+        Edge<T> edge = new Edge<T>(n1, n2, weight);
+        addEdge(edge);
+    }
 
-        if (n1.getAdjacent().contains(n2)) {
+    @Override
+    public void addEdge(Edge<T> edge) {
+        if (edge.getSource().hasEdgeTo(edge.getTarget())) {
             throw new IllegalArgumentException("The edge is already present in the graph");
         } else {
-            n1.getAdjacent().add(n2);
+            edge.getSource().getAdjacent().add(edge);
         }
+
     }
 
     protected Optional<Node> getNode(T value) {
@@ -67,8 +75,8 @@ public class LinkedGraph<T> implements Graph<T> {
     @Override
     public void remove(T value) {
         getNode(value).ifPresent(node -> {
-            nodes.stream().filter(innerNode -> innerNode.getAdjacent().contains(node))
-                    .forEach(innerNode -> innerNode.getAdjacent().remove(node));
+            nodes.stream().filter(innerNode -> innerNode.hasEdgeTo(node))
+                    .forEach(innerNode -> innerNode.getAdjacent().removeIf(edge -> edge.getTarget().equals(node)));
             nodes.remove(node);
         });
     }

@@ -1,9 +1,6 @@
 package datastructures.graph;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -18,16 +15,24 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
         }
 
         @Override
-        public Iterable<? extends Graph.Node<T>> getAdjacent() {
+        public List<Edge<T>> getAdjacent() {
             return IntStream.range(0, nodesCount)
-                    .filter(i -> adjacencyMatrix[nodeIndex][i])
-                    .mapToObj(i -> (Node) nodes[i])
+                    .filter(i -> adjacencyMatrix[nodeIndex][i] != 0)
+                    .mapToObj(i -> {
+                        Node node = (Node) nodes[i];
+                        return new Edge<T>(this, node, adjacencyMatrix[nodeIndex][i]);
+                    })
                     .collect(Collectors.toList());
         }
 
         @Override
         public T getValue() {
             return value;
+        }
+
+        @Override
+        public boolean hasEdgeTo(Graph.Node<T> target) {
+            return adjacencyMatrix[nodeIndex][getNodeIndex(target.getValue())] != 0;
         }
 
         public void setIndex(int i) {
@@ -37,7 +42,7 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
 
     private static final int DEFAULT_INITIAL_MATRIX_CAPACITY = 10;
 
-    private boolean[][] adjacencyMatrix;
+    private int[][] adjacencyMatrix;
     private Object[] nodes; // since Node is a generic type, we cannot instantiate Node[]
     private int nodesCount;
     private int capacity;
@@ -47,7 +52,7 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
     }
 
     public AdjacencyMatrixGraph(int initialCapacity) {
-        adjacencyMatrix = new boolean[initialCapacity][initialCapacity];
+        adjacencyMatrix = new int[initialCapacity][initialCapacity];
         nodes = new Object[initialCapacity];
         capacity = initialCapacity;
     }
@@ -72,7 +77,7 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
 
     private void resize(int newCapacity) {
         Object[] newNodes = new Object[newCapacity];
-        boolean[][] newAdjacencyMatrix = new boolean[newCapacity][newCapacity];
+        int[][] newAdjacencyMatrix = new int[newCapacity][newCapacity];
         System.arraycopy(nodes, 0, newNodes, 0, capacity);
         for (int i = 0; i < capacity; i++) {
             System.arraycopy(adjacencyMatrix[i], 0, newAdjacencyMatrix[i], 0, capacity);
@@ -93,10 +98,15 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
     }
 
     @Override
-    public void addEdge(T v1, T v2) {
+    public void addEdge(T v1, T v2, int weight) {
         int i1 = getNodeIndex(v1);
         int i2 = getNodeIndex(v2);
-        adjacencyMatrix[i1][i2] = true;
+        adjacencyMatrix[i1][i2] = weight;
+    }
+
+    @Override
+    public void addEdge(Edge<T> edge) {
+        addEdge(edge.getSource().getValue(), edge.getTarget().getValue(), edge.getWeight());
     }
 
     @Override

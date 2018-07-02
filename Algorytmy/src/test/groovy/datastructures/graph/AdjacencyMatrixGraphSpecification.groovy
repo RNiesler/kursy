@@ -19,10 +19,10 @@ class AdjacencyMatrixGraphSpecification extends Specification {
         def aNode = graph.nodes.find { it.value == 'a' }
         def bNode = graph.nodes.find { it.value == 'b' }
         def cNode = graph.nodes.find { it.value == 'c' }
-        aNode.adjacent.value.contains('b')
-        aNode.adjacent.value.contains('c')
-        bNode.adjacent.empty
-        cNode.adjacent.value.contains('b')
+        aNode.adjacent.target.value.contains('b')
+        aNode.adjacent.target.value.contains('c')
+        bNode.adjacent.target.empty
+        cNode.adjacent.target.value.contains('b')
     }
 
     void 'test shrink'() {
@@ -52,6 +52,6 @@ class AdjacencyMatrixGraphSpecification extends Specification {
         def dNode = graph.nodes.find { it.value == 'd'}
         def fNode = graph.nodes.find { it.value == 'f'}
         dNode.adjacent.empty
-        'g' in fNode.adjacent.value
+        'g' in fNode.adjacent.target.value
     }
 }

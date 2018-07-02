@@ -47,6 +47,7 @@ public class DepthFirstSearch<T> implements GraphTraverseStrategy<T> {
             }
             if (nextNode != null && !nextNode.isMarked()) {
                 LinkedList<Graph.Node<T>> adjacent = StreamSupport.stream(nextNode.getAdjacent().spliterator(), false)
+                        .map(Graph.Edge::getTarget)
                         .collect(Collectors.toCollection(LinkedList::new));
                 // put node on stack in reverse order to keep natural order when processing
                 ListIterator<Graph.Node<T>> lit = adjacent.listIterator(adjacent.size());
@@ -77,13 +78,18 @@ public class DepthFirstSearch<T> implements GraphTraverseStrategy<T> {
         }
 
         @Override
-        public Iterable<? extends Graph.Node<T>> getAdjacent() {
+        public List<Graph.Edge<T>> getAdjacent() {
             return node.getAdjacent();
         }
 
         @Override
         public T getValue() {
             return node.getValue();
+        }
+
+        @Override
+        public boolean hasEdgeTo(Graph.Node<T> target) {
+            return node.hasEdgeTo(target);
         }
 
         public boolean isMarked() {
