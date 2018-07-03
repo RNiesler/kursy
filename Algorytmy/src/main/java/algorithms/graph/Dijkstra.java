@@ -6,6 +6,10 @@ import java.util.*;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+/**
+ * Calculate shortest path in the graph with the Dijkstra's algorithm.
+ * @param <T> Node type held by the graph
+ */
 public class Dijkstra<T> {
     private Map<T, Map<T, CalculationTuple<T>>> solutionCache = new HashMap<>();
     private Graph<T> graph;

@@ -13,7 +13,7 @@ public interface Graph<T> {
         boolean hasEdgeTo(Node<T> target);
     }
 
-    final class Edge<T> {
+    final class Edge<T> implements Comparable<Edge<T>> {
         private final Node<T> source;
         private final Node<T> target;
         private final int weight;
@@ -34,6 +34,11 @@ public interface Graph<T> {
 
         public int getWeight() {
             return weight;
+        }
+
+        @Override
+        public int compareTo(Edge<T> o) {
+            return weight - o.getWeight();
         }
     }
 
