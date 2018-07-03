@@ -13,10 +13,10 @@ public interface Graph<T> {
         boolean hasEdgeTo(Node<T> target);
     }
 
-    class Edge<T> {
+    final class Edge<T> {
         private final Node<T> source;
         private final Node<T> target;
-        private int weight;
+        private final int weight;
 
         public Edge(Node<T> source, Node<T> target, int weight) {
             this.source = source;
@@ -35,10 +35,6 @@ public interface Graph<T> {
         public int getWeight() {
             return weight;
         }
-
-        public void setWeight(int weight) {
-            this.weight = weight;
-        }
     }
 
     void insert(T value);
@@ -48,8 +44,6 @@ public interface Graph<T> {
     default void addEdge(T v1, T v2) {
         addEdge(v1, v2, 1);
     }
-
-    void addEdge(Edge<T> edge);
 
     void remove(T value);
 

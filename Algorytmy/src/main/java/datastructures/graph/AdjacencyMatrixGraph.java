@@ -105,11 +105,6 @@ public class AdjacencyMatrixGraph<T> implements Graph<T> {
     }
 
     @Override
-    public void addEdge(Edge<T> edge) {
-        addEdge(edge.getSource().getValue(), edge.getTarget().getValue(), edge.getWeight());
-    }
-
-    @Override
     public void remove(T value) {
         int removedInd = getNodeIndex(value);
         for (int i = removedInd; i < nodesCount - 1; i++) {

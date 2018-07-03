@@ -58,8 +58,7 @@ public class LinkedGraph<T> implements Graph<T> {
         addEdge(edge);
     }
 
-    @Override
-    public void addEdge(Edge<T> edge) {
+    protected void addEdge(Edge<T> edge) {
         if (edge.getSource().hasEdgeTo(edge.getTarget())) {
             throw new IllegalArgumentException("The edge is already present in the graph");
         } else {
