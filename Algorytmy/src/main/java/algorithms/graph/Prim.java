@@ -11,7 +11,7 @@ import java.util.*;
  * @param <T> Node type held by the graph
  */
 public class Prim<T> {
-    private UndirectedGraph<T> graph;
+    private final UndirectedGraph<T> graph;
 
     public Prim(UndirectedGraph<T> graph) {
         this.graph = graph;
