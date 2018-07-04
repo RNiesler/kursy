@@ -69,7 +69,13 @@ public class SimpleTrie<T, U> implements Trie<T, U> {
         Iterable<U> path = splitter.split(t);
         Iterator<U> iterator = path.iterator();
         Node nearestAncestor = getNearestAncestor(root, iterator);
-        return getValueFromNode(nearestAncestor);
+        Optional<T> valueOpt = getValueFromNode(nearestAncestor);
+        if (valueOpt.isPresent()) {
+            T value = valueOpt.get();
+            return t.equals(value) ? Optional.of(value) : Optional.empty();
+        } else {
+            return Optional.empty();
+        }
     }
 
     protected static boolean isNodeRoot(Node node) {

@@ -2,6 +2,11 @@ package datastructures.trie;
 
 import java.util.Optional;
 
+/**
+ * Trie datastructure interface
+ * @param <T> Element type
+ * @param <U> Type of elements that the main type can be split into (for example Character for String)
+ */
 public interface Trie<T, U> {
     interface Splitter<V, W> {
         Iterable<W> split(V t);

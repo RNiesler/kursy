@@ -13,6 +13,7 @@ repositories {
 dependencies {
 //    compile 'org.codehaus.groovy:groovy-all:3.0.0-alpha-2'
     compile 'org.codehaus.groovy:groovy-all:2.4.15'
+    compileOnly 'org.projectlombok:lombok:1.18.0'
     testCompile "org.spockframework:spock-core:1.1-groovy-2.4"
 
     testCompileOnly 'junit:junit:4.12'
