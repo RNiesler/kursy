@@ -1,6 +1,6 @@
 package datastructures.graph
 
-import suffixtree.SuffixTree
+import datastructures.suffixtree.SuffixTree
 import spock.lang.Specification
 
 class SuffixTreeSpecification extends Specification {

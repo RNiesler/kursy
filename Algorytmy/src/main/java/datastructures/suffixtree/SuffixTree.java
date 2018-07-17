@@ -1,4 +1,4 @@
-package suffixtree;
+package datastructures.suffixtree;
 
 import datastructures.trie.CompressedTrie;
 
