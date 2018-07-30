@@ -120,7 +120,7 @@ public class Dijkstra<T> {
             currentCalculation.visited = true;
             // we still need to update distances to adjacent nodes for the future calculations
             updateAdjacentDistances(queue, nodeMap, solution, currentCalculation);
-        } else { //TODO proper exception
+        } else {
             throw new NodeNotReachableException();
         }
 
