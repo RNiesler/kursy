@@ -1,4 +1,5 @@
-package algorithms.binarysearch
+package algorithms.divideandconquer
+
 
 import spock.lang.Specification
 

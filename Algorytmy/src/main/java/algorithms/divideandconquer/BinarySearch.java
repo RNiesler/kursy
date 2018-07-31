@@ -1,4 +1,4 @@
-package algorithms.binarysearch;
+package algorithms.divideandconquer;
 
 import java.util.Comparator;
 import java.util.Objects;
