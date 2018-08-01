@@ -28,4 +28,15 @@ public class DynamicProgrammingCoins {
             return sum;
         }
     }
+
+    static long waysIter(int n, int[] coins) {
+        long[] ways = new long[n + 1];
+        ways[0] = 1;
+        for (int coin : coins) {
+            for (int j = coin; j <= n; j++) {
+                ways[j] += ways[j - coin];
+            }
+        }
+        return ways[n];
+    }
 }
