@@ -1,7 +1,7 @@
 package algorithms.dp
 
 import spock.lang.Specification
-import static algorithms.dp.Knapsack.Item //TODO groovyc complains when using Knapsack.Item[]
+import static algorithms.dp.Knapsack.Item //groovyc complains when using Knapsack.Item[]
 
 class KnapsackSpecification extends Specification {
     void 'g4g'() {
