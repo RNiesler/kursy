@@ -31,5 +31,13 @@ class QuickSortSpecification extends Specification {
         t3 == [0, 1, 2, 2, 3, 4, 8, 8, 9, 9] as Integer[]
     }
 
+    void 'test empty'() {
+        setup:
+        final t = [] as Integer[]
+        when:
+        QuickSort.sort(t)
+        then:
+        t == [] as Integer[]
+    }
 
 }
