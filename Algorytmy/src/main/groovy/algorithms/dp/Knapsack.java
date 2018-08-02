@@ -77,6 +77,8 @@ public class Knapsack {
                 if (items[item].weight <= subCapacity) {
                     int valueWithItem = items[item].value + memo[item + 1][capacity - items[item].weight];
                     memo[item + 1][subCapacity] = Math.max(valueWithItem, memo[item][capacity]);
+                } else {
+                    memo[item + 1][subCapacity] = memo[item + 1][subCapacity - 1];
                 }
             }
         }
