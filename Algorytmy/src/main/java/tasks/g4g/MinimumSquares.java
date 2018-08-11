@@ -42,4 +42,40 @@ public class MinimumSquares {
             return currentMin;
         }
     }
+
+    public static int minimumSquaresIterative(int dimX, int dimY) {
+        int[][] solution = new int[dimX + 1][dimY + 1];
+
+        for (int i = 1; i <= dimX; i++) {
+            solution[i][1] = i;
+        }
+        for (int i = 1; i <= dimY; i++) {
+            solution[1][i] = i;
+        }
+
+        for (int x = 2; x <= dimX; x++) {
+            for (int y = 2; y <= dimY; y++) {
+                int smallerDim = x;
+                if (y < x) {
+                    smallerDim = y;
+                }
+                int currentMin = Integer.MAX_VALUE;
+                for (int dim = smallerDim; dim >= 1; dim--) {
+                    int squaresHorizontal = x / dim;
+                    int rectangleRightWidth = x % dim;
+                    int squaresVertical = y / dim;
+                    int rectangleBottomHeight = y % dim;
+                    int squareCount = squaresHorizontal * squaresVertical;
+                    squareCount += solution[rectangleRightWidth][dimY];
+                    squareCount += solution[x - rectangleRightWidth][rectangleBottomHeight];
+                    if (squareCount < currentMin) {
+                        currentMin = squareCount;
+                    }
+                }
+                solution[x][y] = currentMin;
+            }
+        }
+
+        return solution[dimX][dimY];
+    }
 }
